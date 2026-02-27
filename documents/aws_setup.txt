@@ -1,0 +1,39 @@
+Part 2: AWS Setup & Exploration
+
+1. AWS Account
+- Created an AWS account.
+- All tasks done using an IAM user.
+- Root account NOT used for scripts.
+
+2. AWS Credentials Configuration
+- Installed AWS CLI: pip install awscli
+- Configured credentials using:
+  aws configure
+  - AWS Access Key ID
+  - AWS Secret Access Key
+  - Default region: ap-south-1
+  - Output format: json
+- Credentials stored in ~/.aws/credentials securely.
+
+3. Launch EC2 Instance (Free Tier)
+- Create a VPC, subnet, internet gateway.
+- Go to EC2 → Launch Instance
+- Selected Amazon Linux 2 AMI (Free Tier)
+- Instance type: t2.micro
+- Key pair created for SSH access
+- Security group: Allow SSH (port 22)
+- Instance launched in region: ap-south-1, availability zone: ap-south-1
+- Connected using:
+  ssh -i "key.pem" ec2-user@<public-ip>
+
+4. Create S3 Bucket
+- Go to S3 → Create Bucket
+- Bucket name: your-unique-bucket-name
+- Region: ap-south-1
+- Access: Block public access by default (private bucket)
+- Permissions: IAM user can read/write files
+
+5. AWS Concepts
+- Regions & Availability Zones: Regions are geographic areas; AZs are isolated data centers within regions.
+- Public vs Private Access in S3: Public allows anyone to access files; private restricts access to authorized IAM users/roles.
+- IAM Roles: Assign roles to EC2 instances to provide temporary credentials for AWS SDKs, avoiding hardcoding access keys.
