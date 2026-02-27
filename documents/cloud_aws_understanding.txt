@@ -1,0 +1,43 @@
+1. What is Cloud Computing?
+Cloud computing is the delivery of computing resources—such as servers, storage, databases, networking, software, and analytics—over the internet ("the cloud"). 
+It allows organizations and individuals to use IT resources on-demand without having to own and maintain physical hardware. 
+Benefits include scalability, cost-effectiveness, flexibility, and accessibility from anywhere.
+
+2. Differences between IaaS, PaaS, and SaaS:
+- IaaS (Infrastructure as a Service):
+  Provides virtualized computing resources over the internet.
+  Users manage OS, applications, and data while the provider manages servers, networking, and storage.
+  Example: AWS EC2, Google Compute Engine, Azure Virtual Machines.
+
+- PaaS (Platform as a Service):
+  Provides a platform and environment to build, deploy, and manage applications.
+  Users focus on applications and data; the provider manages the infrastructure, OS, and runtime.
+  Example: AWS Elastic Beanstalk, Google App Engine, Heroku.
+
+- SaaS (Software as a Service):
+  Provides ready-to-use software applications over the internet.
+  Users access software via web/browser without managing underlying infrastructure.
+  Example: Gmail, Salesforce, Microsoft Office 365.
+
+3. Why AWS is used and common real-world use cases:
+AWS (Amazon Web Services) is a leading cloud provider offering a wide range of cloud services globally.
+Reasons for usage:
+  - Scalability and flexibility
+  - Pay-as-you-go pricing
+  - High availability and reliability
+  - Strong security and compliance
+Real-world use cases:
+  - Hosting websites and web applications
+  - Data storage and backup
+  - Big data analytics
+  - Machine learning model deployment
+  - Disaster recovery solutions
+
+4. Purpose of EC2 and S3 in a cloud architecture:
+- EC2 (Elastic Compute Cloud):
+  Provides scalable virtual servers (instances) for running applications.
+  Purpose: compute power for hosting applications, running backend processes, or performing computations.
+
+- S3 (Simple Storage Service):
+  Provides scalable object storage for data, files, and backups.
+  Purpose: store and retrieve any amount of data reliably and securely, often used for application data, logs, media files, and backups.
