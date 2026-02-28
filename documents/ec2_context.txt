@@ -1,0 +1,34 @@
+1.How the same python scripts would run on an EC2 instance.
+
+Running Python Script on EC2:
+The same Python automation script can run on an Amazon EC2 instance because EC2 is a cloud-based Linux server.
+
+Steps:
+- Launch EC2
+- SSH into instance
+- Install Python & dependencies
+- Clone project
+- Run the script
+
+The execution process is the same as running locally.
+
+2. Difference between running scripts locally vs on EC2
+Local vs EC2 Execution
+- Local System
+- Uses stored access keys
+- Development environment
+- Less secure if keys are exposed
+
+EC2 Instance
+- Runs inside AWS cloud
+- Uses IAM Role instead of access keys
+- More secure and production-ready
+
+3.How IAM roles can replace access keys on EC2
+IAM Roles Replacing Access Keys
+Instead of storing AWS credentials in the code, an IAM Role is attached to EC2.
+
+When the script runs:
+- AWS automatically provides temporary credentials.
+- The script securely accesses Amazon S3.
+- No hardcoded secrets are required.
