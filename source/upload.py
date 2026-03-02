@@ -81,7 +81,7 @@ def upload_file(file_path, bucket_name, region_name, s3_key=None):
 # ----------------------------
 if __name__ == "__main__":
 
-    # Parameters (can be changed easily)
+    # Parameters
     BUCKET_NAME = "aws-storage-project-bucket"
     REGION = "ap-south-1"
 
