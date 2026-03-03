@@ -5,8 +5,8 @@ AWS_REGION = "ap-south-1"   # Change to your region
 S3_BUCKET_NAME = "aws-storage-rds-bucket"  # Must be globally unique
 
 # Local file paths
-LOCAL_RAW_FILE = "/mnt/d/aws_cloud_storage/aws_storage_with_rds/dataset/supermarket.csv"   # Path to your local CSV
-LOCAL_DOWNLOAD_PATH = "/mnt/d/aws_cloud_storage/aws_storage_with_rds/downloads/supermarket.csv"
+LOCAL_RAW_FILE = "/mnt/d/aws_cloud_storage/aws_storage_with_rds/dataset/sales_transactions.csv"   # Path to your local CSV
+LOCAL_DOWNLOAD_PATH = "/mnt/d/aws_cloud_storage/aws_storage_with_rds/downloads/sales_transactions.csv"
 
 # S3 folder structure
 S3_RAW_PREFIX = "raw/"
