@@ -1,0 +1,112 @@
+AWS Provisioning Documentation
+
+Part 1: Custom VPC 
+ - Region: Mumbai (ap-south-1) – all resources must be created here.
+Step 0: Verify AWS Region
+ - Check the top-right corner of the AWS Console.
+ - Ensure region is set to Mumbai (ap-south-1).
+
+Step 1: Create a Custom VPC
+ - Go to VPC → Your VPCs → Create VPC.
+ - Name: MyVPC
+ - IPv4 CIDR block: 10.0.0.0/16
+ - Click Create VPC 
+Purpose: Provides a private network to hold subnets, EC2 instances, and other resources.
+
+Step 2: Create a Subnet
+  - Go to VPC → Subnets → Create subnet.
+  - Name: MySubnet
+  - VPC: MyVPC
+  - Availability Zone: ap-south-1a
+  - IPv4 CIDR block: 10.0.1.0/24
+  - Click Create subnet 
+Purpose: Subnet will host your EC2 instance.
+
+Step 3: Create Internet Gateway (IGW)
+   - Go to VPC → Internet Gateways → Create Internet Gateway.
+   - Name: MyIGW
+   - Click Create
+Attach IGW to your VPC:
+   - Select MyIGW → Actions → Attach to VPC → MyVPC
+Purpose: Allows resources in VPC to access the internet.
+
+Step 4: Configure Route Table
+   - Go to VPC → Route Tables → Create Route Table.
+   - Name: MyRouteTable
+   - VPC: MyVPC
+   - Click Create 
+Add Internet Route:
+   - Select MyRouteTable → Routes → Edit routes → Add route
+   - Destination: 0.0.0.0/0
+   - Target: MyIGW
+   - Click Save routes 
+Purpose: Routes traffic from subnet to the internet via IGW.
+
+Step 5: Associate Route Table with Subnet
+   - Go to MyRouteTable → Subnet Associations → Edit subnet associations.
+   - Select MySubnet.
+   - Click Save 
+Purpose: Makes the subnet public so EC2 can access the internet.
+
+Step 6: Create Security Group
+   - Go to EC2 → Security Groups → Create Security Group.
+   - Name: MySG
+   - VPC: MyVPC
+   - Inbound rules: SSH (port 22) from your IP
+   - Click Create Security Group 
+Purpose: Controls inbound/outbound access for EC2 instance.
+
+
+Part 2: S3 and MSSQL RDS Provisioning
+- Step 1: Create an S3 Bucket (Raw Data Lake)
+- This will store raw CSV files.
+Steps:
+    - Go to AWS Console → S3 → Create bucket
+    - Bucket Name: aws-storage-rds-bucket
+    - Region: Same as RDS instance (e.g., ap-south-1)
+    Settings:
+        Versioning: optional
+        Block public access: keep blocked
+        Click Create bucket 
+
+Step 2: Provision MSSQL RDS Instance
+  - RDS stores processed/structured data from your CSV files.
+Steps:
+  - Go to AWS Console → RDS → Databases → Create database
+  - Engine: Microsoft SQL Server
+  - Template: Free Tier
+DB Instance Settings:
+  -  DB instance identifier: myproject-rds
+  -  Master username: admin
+  -  Master password: ########
+  -  DB instance size: Free Tier → db.t3.micro
+  -  Storage: Default 20GB
+
+Connectivity:
+  -  VPC: Use your custom VPC
+  -  Subnet group: Select subnets in VPC
+  -  Public access: Yes (if connecting from laptop/EC2)
+  -  Security group: Attach one that allows inbound DB port (MSSQL = 1433)
+Click Create database → wait until status = Available 
+
+Step 3: Configure Security Groups & Connectivity
+    RDS is inaccessible unless security group allows your IP or EC2 to connect.
+Steps:
+  -  Go to EC2 → Security Groups → Select the SG attached to RDS
+  -  Inbound rules → Edit inbound rules
+  -  Type: MSSQL
+  -  Port: 1433
+  -  Source: My IP (for laptop) or Custom IP (for EC2)
+
+Connect RDS with SQL Server Management Studio(SSML):
+  -  Connect Using SSMS
+  -  Open SQL Server Management Studio on your computer.
+  -  In the Server name field, enter the RDS endpoint (e.g., mydb.xxxxxxx.ap-south-1.rds.amazonaws.com).
+  -  Authentication: SQL Server Authentication.
+  -  Username: The master username you set when creating the RDS instance.
+  -  Password: The master password.
+  -  Click Connect.
+
+Verify Connection
+  -  Once connected, you’ll see your RDS SQL Server instance in SSMS.
+  -  You can now create databases, tables, run queries, and manage it just like a normal SQL Server.
