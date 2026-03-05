@@ -1,0 +1,77 @@
+======================================================
+AWS Console Setup Guide for Sales Data Pipeline Project
+=======================================================
+
+This guide explains how to set up the project using the AWS Management Console
+(no command line required). Follow each step carefully.
+
+STEP 1: Create an S3 Bucket
+---------------------------
+1. Log in to AWS Console.
+2. Go to "Services" → "S3".
+3. Click "Create bucket".
+4. Enter a bucket name (e.g., aws-storage-rds-bucket).
+5. Select a region (e.g., ap-south-1).
+6. Leave other settings default and click "Create bucket".
+7. Inside the bucket, create two folders:
+   - raw
+   - processed
+
+STEP 2: Upload Raw Dataset
+--------------------------
+1. Open your S3 bucket.
+2. Go to the "raw" folder.
+3. Click "Upload" and select your dataset file (sales_transactions.csv).
+4. Confirm upload.
+
+STEP 3: Create RDS Database
+---------------------------
+1. Go to "Services" → "RDS".
+2. Click "Create database".
+3. Choose "Standard create".
+4. Select engine: MSSQL.
+5. Set DB instance identifier (e.g., salesdb).
+6. Set master username and password.
+7. Choose instance type (db.t3.micro for demo).
+8. Configure storage (default is fine).
+9. In "Connectivity":
+   - Select the VPC which is created by you or refer documents/aws_provisioning.txt 
+     for VPC creation.
+   - Enable Public access if connecting from local machine.
+   - Add security group rule to allow your IP.
+10. Click "Create database".
+
+STEP 4: Data Cleaning (Local or EC2)
+------------------------------------
+1. Download the raw dataset from S3.
+2. Clean the data using Python + Pandas (handle missing values, fix dates).
+3. Save the cleaned dataset as sales_cleaned.csv.
+4. Upload the cleaned dataset back to S3 → "processed" folder.
+
+STEP 5: Import Data into RDS
+----------------------------
+1. Use RDS Query Editor in AWS Console.
+2. Connect to your database.
+3. Create tables using SQL commands.
+4. Import the cleaned dataset into the tables.
+
+STEP 6: Perform SQL Analysis
+----------------------------
+1. In RDS Query Editor, run SQL queries such as:
+   - Aggregations (SUM, AVG, COUNT).
+   - Group by product_id or date.
+   - Find top 5 products by sales.
+
+STEP 7: Export Results
+----------------------
+1. Run queries in RDS Query Editor.
+2. Download results as CSV.
+3. Save locally for analysis.
+
+Summary
+-------
+- S3 stores raw and processed data.
+- RDS stores structured tables.
+- Python (local or EC2) cleans data.
+- SQL queries provide insights.
+- Results exported back to CSV.
