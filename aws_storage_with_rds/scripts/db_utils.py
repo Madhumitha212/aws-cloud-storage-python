@@ -1,4 +1,4 @@
-from .insertion import *
+from config.connection import *
 
 def execute_query(query, params=(), fetch=False):
     conn = get_connection()
