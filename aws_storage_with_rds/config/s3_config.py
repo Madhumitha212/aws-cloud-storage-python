@@ -1,21 +1,25 @@
 import boto3
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # AWS Configuration
-AWS_REGION = "ap-south-1"   # Change to your region
-S3_BUCKET_NAME = "aws-storage-rds-bucket"  # Must be globally unique
+AWS_REGION = os.getenv("AWS_REGION")   # Change to your region
+S3_BUCKET_NAME =  os.getenv("S3_BUCKET_NAME")# Must be globally unique
 
 # Local file paths
-LOCAL_RAW_FILE = "/mnt/d/aws_cloud_storage/aws_storage_with_rds/dataset/sales_transactions.csv"   # Path to your local CSV
-LOCAL_DOWNLOAD_PATH = "/mnt/d/aws_cloud_storage/aws_storage_with_rds/downloads/sales_transactions.csv"
-LOCAL_PROCESS_DOWNLOAD_PATH = "/mnt/d/aws_cloud_storage/aws_storage_with_rds/downloads/cleaned_sales.csv"
+LOCAL_RAW_FILE =  os.getenv("LOCAL_RAW_FILE")  # Path to your local CSV
+LOCAL_DOWNLOAD_PATH = os.getenv("LOCAL_DOWNLOAD_PATH") 
+LOCAL_PROCESS_DOWNLOAD_PATH = os.getenv("LOCAL_PROCESS_DOWNLOAD_PATH") 
 
 # S3 folder structure
 S3_RAW_PREFIX = "raw/"
 S3_PROCESSED_PREFIX = "processed/"
 
-RAW_PATH = f"s3://{S3_BUCKET_NAME}/raw/sales_transactions.csv"
-PROCESSED_PATH = f"s3://{S3_BUCKET_NAME}/processed/cleaned_sales.csv"
-MONTHLY_SUMMARY_PATH = f"s3://{S3_BUCKET_NAME}/processed/monthly_summary.csv"
+RAW_PATH = os.getenv("RAW_PATH")
+PROCESSED_PATH = os.getenv("PROCESSED_PATH")
+MONTHLY_SUMMARY_PATH = os.getenv("MONTHLY_SUMMARY_PATH")
 
 
 def get_s3_client():
