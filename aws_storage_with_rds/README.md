@@ -15,20 +15,6 @@ The pipeline performs:
 
 ---
 
-## Data Pipeline Architecture
-
-```mermaid
-flowchart LR
-    A[Raw Dataset] --> B[S3 Bucket (raw)]
-    B --> C[Python Cleaning (Pandas)]
-    C --> D[S3 Bucket (processed)]
-    D --> E[RDS Database]
-    E --> F[SQL Analytics]
-    F --> G[Export to CSV]
-```
-
----
-
 ## Development Environment
 
 | Component | Details |
