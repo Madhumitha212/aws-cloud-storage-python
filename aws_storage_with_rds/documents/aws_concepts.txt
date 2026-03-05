@@ -1,0 +1,86 @@
+1.What a Data Lake is and how S3 fits into it
+
+A Data Lake is a centralized storage system that stores large amounts of raw data in its original format.
+The data can be structured (CSV, tables), semi-structured (JSON, XML), or unstructured (images, logs, videos).
+
+Unlike traditional databases, a data lake does not require a fixed schema before storing data. 
+This means we can store data first and decide how to process or analyze it later.
+In AWS, Amazon S3 acts as a Data Lake storage layer. S3 is highly scalable, durable, and cost-effective. 
+
+It allows us to:
+- Store raw datasets (like CSV files)
+- Organize data using folders such as /raw/ and /processed/
+- Integrate with data processing tools like Python, Spark, or AWS services
+- Maintain virtually unlimited storage
+
+2.Difference Between Data Lake and Data Warehouse
+A Data Lake and a Data Warehouse are both used to store data, but they serve different purposes.
+
+Data Lake:
+- Stores raw data
+- Schema is applied after storing (schema-on-read)
+- Handles structured, semi-structured, and unstructured data
+- Used for data science, machine learning, and big data processing
+Example: Amazon S3
+
+Data Warehouse:
+- Stores structured and processed data
+- Schema is defined before storing (schema-on-write)
+- Optimized for reporting and business intelligence
+- Used for dashboards and analytics
+Example: Amazon Redshift
+
+3.Purpose and Use Cases of Amazon Glacier
+Amazon S3 Glacier is a low-cost cloud storage service designed for long-term data archiving.
+- It is used for storing data that:
+- Is rarely accessed
+- Must be retained for compliance
+- Needs secure long-term backup
+
+Examples:
+- Old transaction records
+- Audit logs
+- Backup data
+- Legal or financial archives
+
+Glacier is cheaper than regular S3 storage, but retrieval takes more time (minutes to hours). 
+In a data engineering workflow, older or infrequently accessed data from S3 can be moved to Glacier using lifecycle policies.
+
+4.What is AWS RDS and When to Use It?
+Amazon RDS (Relational Database Service) is a managed database service provided by AWS.
+It allows us to create and manage relational databases like:
+- MySQL
+- PostgreSQL
+- SQL Server
+- MariaDB
+- Oracle
+
+RDS automatically handles:
+- Backups
+- Patching
+- Scaling
+- Security updates
+- Monitoring
+
+We use RDS when:
+- We need a structured relational database
+- We want SQL-based querying
+- We want AWS to manage infrastructure
+- We need high availability and reliability
+In my project, RDS is used to store structured transaction data and perform SQL analytics such as aggregation, filtering, ranking, and reporting.
+
+5.Difference between managed databases (RDS) and self-managed databases on EC2
+
+Managed Database (RDS):
+- AWS manages maintenance and backups
+- Automatic updates and patching
+- Easy scaling
+- Built-in monitoring
+- Less operational overhead
+
+Self-Managed Database on EC2:
+- We install and configure the database manually
+- We manage backups and security
+- More control over configuration
+- Higher maintenance effort
+- Requires more DevOps knowledge
