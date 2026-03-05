@@ -1,11 +1,15 @@
 #configurations to connect to RDS
 import pyodbc
+from dotenv import load_dotenv
+import os
 
-RDS_DRIVER = "{ODBC Driver 17 for SQL Server}"
-RDS_SERVER = "aws-project-database.c94iqcqk2mie.ap-south-1.rds.amazonaws.com,1433;"
-RDS_DATABASE = "transactiondb"
-RDS_USERNAME = "admin"
-RDS_PASSWORD = "_Bhanu123_"
+load_dotenv()
+
+RDS_DRIVER = os.getenv("RDS_DRIVER")
+RDS_SERVER = os.getenv("RDS_SERVER")
+RDS_DATABASE = os.getenv("RDS_DATABASE")
+RDS_USERNAME = os.getenv("RDS_USERNAME")
+RDS_PASSWORD = os.getenv("RDS_PASSWORD")
 
 def get_connection():
     return pyodbc.connect(
