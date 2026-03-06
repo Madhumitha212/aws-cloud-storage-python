@@ -1,4 +1,5 @@
 from .db_utils import *
+from .export_to_csv import *
 
 #aggregations
 def company_summary_metrics():
@@ -12,7 +13,17 @@ def company_summary_metrics():
 
     rows, _ = execute_query(query, fetch=True)
 
-    print("Company Summary:", rows[0])
+    headers = [
+        "total_transactions",
+        "total_revenue",
+        "avg_transaction_value"
+    ]
+
+    upload_query_results_to_s3(
+        "analytics/company_summary.csv",
+        rows,
+        headers
+    )
 
 #Regions With High Revenue & High Avg Discount
 def high_performing_regions():
@@ -30,22 +41,44 @@ def high_performing_regions():
 
     rows, _ = execute_query(query, (50000, 10), fetch=True)
 
+    headers = ["region", "total_revenue", "avg_discount"]
+
+    # Print results
+    print("High Performing Regions:")
     for row in rows:
-        print(row)
+        row_dict = dict(zip(headers, row))
+        print(row_dict)
+
+    # Upload to S3
+    upload_query_results_to_s3(
+        "analytics/high_performing_regions.csv",
+        rows,
+        headers
+    )
 
 #Last 30 days transactions
 def last_30_days_transactions():
     query = """
-    SELECT *
+    SELECT transaction_id, transaction_date, final_amount
     FROM transactions
     WHERE transaction_date >= DATEADD(DAY, -30, GETDATE());
     """
 
-    rows, row_count = execute_query(query, fetch=True)
+    rows, _ = execute_query(query, fetch=True)
 
-    print("Last 30 Days Transactions:", row_count)
-    for row in rows[:5]:
-        print(row)
+    headers = ["transaction_id", "transaction_date", "final_amount"]
+
+    print("Last 30 days transaction:")
+    for row in rows:
+        row_dict = dict(zip(headers, row))
+        print(row_dict)
+    
+    upload_query_results_to_s3(
+        "analytics/last_30_days_transaction.csv",
+        rows,
+        headers
+    )
+   
 
 #Rank Customers by Total Spending
 def rank_customers_by_spending():
@@ -59,9 +92,19 @@ def rank_customers_by_spending():
     """
 
     rows, _ = execute_query(query, fetch=True)
+    headers = ["customer_id", "total_spent", "spending_rank"]
 
+    print("Customers rank by total spending:")
     for row in rows:
-        print(row)
+        row_dict = dict(zip(headers, row))
+        print(row_dict)
+     
+    upload_query_results_to_s3(
+        "analytics/rank.csv",
+        rows,
+        headers
+    )
+    
 
 #Top Performing Region
 def top_performing_region():
@@ -76,8 +119,15 @@ def top_performing_region():
     """
 
     rows, _ = execute_query(query, fetch=True)
+    headers = ["region", "total_revenue"]
 
-    print("Top Region:", rows[0])
+    print("Top Region:", dict(zip(headers, rows)))
+
+    upload_query_results_to_s3(
+        "analytics/top_performing_region.csv",
+        rows,
+        headers
+    )
 
 if __name__ == "__main__":
     company_summary_metrics()
